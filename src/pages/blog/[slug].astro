@@ -145,6 +145,16 @@ function formatDate(date: Date): string {
 		margin: 1rem 0;
 	}
 
+	.post-content :global(a) {
+		color: #007acc;
+		text-decoration: underline;
+		transition: color 0.3s ease;
+	}
+
+	.post-content :global(a:hover) {
+		color: #005fa3;
+	}
+
 	.post-content :global(ul),
 	.post-content :global(ol) {
 		margin: 1rem 0;
@@ -259,6 +269,14 @@ function formatDate(date: Date): string {
 
 	:global(html[data-theme="dark"]) .post-content :global(h1) {
 		border-bottom-color: #1e90ff;
+	}
+
+	:global(html[data-theme="dark"]) .post-content :global(a) {
+		color: #82c0ff; /* 밝은 하늘색으로 변경 */
+	}
+
+	:global(html[data-theme="dark"]) .post-content :global(a:hover) {
+		color: #a9d5ff; /* 호버 시 더 밝은 색으로 변경 */
 	}
 
 	:global(html[data-theme="dark"]) .post-content :global(blockquote) {

@@ -3,6 +3,7 @@
     {
       "id": "ecommerce-platform",
       "title": "이커머스 플랫폼",
+      "thumbnail": "/thumbnail-ecommerce.png",
       "description": "Next.js와 TypeScript를 활용한 풀스택 이커머스 플랫폼입니다. 사용자 인증, 상품 관리, 결제 시스템을 구현했습니다.",
       "status": "진행중",
       "period": {

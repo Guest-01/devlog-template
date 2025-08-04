@@ -1,23 +1,43 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
 import resumeData from '../data/resume.json';
 
-const authorName = "홍재훈";
 const { profile, skills, experience, education } = resumeData;
 ---
 
-<Layout title={`이력서 - ${authorName}`}>
+<Layout title={`이력서 - ${SITE.author.name}`}>
 	<section class="resume-header">
 		<h1>이력서</h1>
-		<p>개발자 {profile.name}의 경력과 역량을 소개합니다</p>
+		<p>개발자 {SITE.author.name}의 경력과 역량을 소개합니다</p>
 	</section>
 	
 	<section class="resume-content">
 		<section class="resume-section">
 			<h2>프로필</h2>
-			{profile.description.map((paragraph) => (
-				<p>{paragraph}</p>
-			))}
+			<div class="profile-content-wrapper">
+				{SITE.author.profile && (
+					<div class="profile-picture-wrapper">
+						<img src={SITE.author.profile} alt={`${SITE.author.name} 프로필 사진`} class="profile-picture" />
+					</div>
+				)}
+				<div class="profile-text-and-links">
+					{profile.description.map((paragraph) => (
+						<p>{paragraph}</p>
+					))}
+					<div class="social-links">
+						<a href={`mailto:${SITE.author.email}`} class="social-link" aria-label="Email">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+						</a>
+						<a href={SITE.author.github} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+						</a>
+						<a href={SITE.author.linkedin} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+						</a>
+					</div>
+				</div>
+			</div>
 		</section>
 
 		<section class="resume-section">
@@ -112,6 +132,36 @@ const { profile, skills, experience, education } = resumeData;
 		padding: 0;
 	}
 
+	.profile-section {
+		/* display: flex; 제거 */
+		/* gap: 2rem; 제거 */
+		/* align-items: flex-start; 제거 */
+	}
+
+	.profile-content-wrapper {
+		display: flex;
+		gap: 2rem; /* 사진과 텍스트 사이 간격 */
+		align-items: flex-start; /* 상단 정렬 */
+		margin-top: 1.5rem; /* 부제목과의 간격 */
+	}
+
+	.profile-picture-wrapper {
+		flex-shrink: 0;
+		width: 120px;
+		height: 120px;
+	}
+
+	.profile-picture {
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+
+	.profile-text-and-links {
+		flex-grow: 1;
+	}
+
 	.resume-section h2 {
 		color: #333;
 		margin: 0 0 1.5rem 0;
@@ -135,6 +185,29 @@ const { profile, skills, experience, education } = resumeData;
 		color: #555;
 		line-height: 1.7;
 		margin: 0.8rem 0;
+	}
+
+	.social-links {
+		display: flex;
+		gap: 1rem;
+		margin-top: 1.5rem;
+	}
+
+	.social-link {
+		color: #333;
+		transition: color 0.3s ease;
+	}
+
+	.social-link:hover {
+		color: #007acc;
+	}
+
+	:global(html[data-theme="dark"]) .social-link {
+		color: #e4e4e4;
+	}
+
+	:global(html[data-theme="dark"]) .social-link:hover {
+		color: #1e90ff;
 	}
 
 	.skill-category {

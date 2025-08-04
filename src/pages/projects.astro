@@ -1,12 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
 import projectsData from '../data/projects.json';
 
-const authorName = "홍재훈";
 const projects = projectsData.projects;
 ---
 
-<Layout title={`프로젝트 - ${authorName}`}>
+<Layout title={`프로젝트 - ${SITE.author.name}`}>
 	<section class="projects-header">
 		<h1>프로젝트</h1>
 		<p>개발한 프로젝트들을 소개합니다</p>
@@ -14,25 +14,32 @@ const projects = projectsData.projects;
 	
 	<section class="projects-grid">
 		{projects.map((project) => (
-			<div class="project-card">
-				<h2>{project.title}</h2>
-				<div class="project-meta">
-					<span class={`status ${project.status === '완료' ? 'completed' : ''}`}>
-						{project.status}
-					</span>
-					<span class="period">
-						{project.period.start} - {project.period.end}
-					</span>
-				</div>
-				<p>{project.description}</p>
-				<div class="tech-stack">
-					{project.technologies.map((tech) => (
-						<span class="tech">{tech}</span>
-					))}
-				</div>
-				<div class="project-links">
-					<a href={project.links.github} class="link">GitHub</a>
-					<a href={project.links.demo} class="link">Demo</a>
+			<div class={`project-card ${project.thumbnail ? 'with-thumbnail' : ''}`}>
+				{project.thumbnail && (
+					<div class="thumbnail-wrapper">
+						<img src={project.thumbnail} alt={`${project.title} 썸네일`} class="thumbnail" />
+					</div>
+				)}
+				<div class="project-content">
+					<h2>{project.title}</h2>
+					<div class="project-meta">
+						<span class={`status ${project.status === '완료' ? 'completed' : ''}`}>
+							{project.status}
+						</span>
+						<span class="period">
+							{project.period.start} - {project.period.end}
+						</span>
+					</div>
+					<p>{project.description}</p>
+					<div class="tech-stack">
+						{project.technologies.map((tech) => (
+							<span class="tech">{tech}</span>
+						))}
+					</div>
+					<div class="project-links">
+						<a href={project.links.github} class="link">GitHub</a>
+						<a href={project.links.demo} class="link">Demo</a>
+					</div>
 				</div>
 			</div>
 		))}
@@ -70,11 +77,29 @@ const projects = projectsData.projects;
 		padding: 1.5rem;
 		margin-bottom: 1.5rem;
 		transition: transform 0.2s ease, box-shadow 0.2s ease;
+		display: flex; /* Flexbox 추가 */
+		gap: 1.5rem; /* 썸네일과 콘텐츠 사이 간격 */
 	}
 
-	.project-card:hover {
+	.project-card.with-thumbnail:hover {
 		transform: translateY(-2px);
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	}
+
+	.thumbnail-wrapper {
+		flex-shrink: 0; /* 썸네일 크기 고정 */
+		width: 150px; /* 썸네일 너비 */
+	}
+
+	.thumbnail {
+		width: 100%;
+		height: auto;
+		border-radius: 4px;
+		object-fit: cover;
+	}
+
+	.project-content {
+		flex-grow: 1; /* 콘텐츠 영역이 남은 공간 모두 차지 */
 	}
 
 	.project-card h2 {

@@ -1,11 +1,11 @@
 ---
+import { SITE } from '../config/site';
+
 export interface Props {
 	title?: string;
 }
 
-const siteName = "TIL";
-const siteTitle = "TIL - Today I Learned";
-const { title = siteTitle } = Astro.props;
+const { title = SITE.title } = Astro.props;
 
 // 현재 경로 확인
 const currentPath = Astro.url.pathname;
@@ -65,7 +65,7 @@ const currentPath = Astro.url.pathname;
 	<body>
 		<div class="container">
 			<nav>
-				<a href="/" class="logo">{siteName}</a>
+				<a href="/" class="logo">{SITE.name}</a>
 				<div class="nav-links">
 					<a href="/" class={currentPath === '/' ? 'active' : ''}>블로그</a>
 					<a href="/projects" class={currentPath === '/projects' ? 'active' : ''}>프로젝트</a>
@@ -95,7 +95,7 @@ const currentPath = Astro.url.pathname;
 		const html = document.documentElement;
 		
 		// 현재 테마 상태 확인 (이미 head script에서 설정됨)
-		const currentTheme = html.getAttribute('data-theme') || 'light';
+		const currentTheme = (html.getAttribute('data-theme') || 'light') as 'light' | 'dark';
 		
 		// 아이콘 동기화 (head script에서 이미 설정했지만 한번 더 확인)
 		updateToggleIcon(currentTheme);
@@ -110,9 +110,9 @@ const currentPath = Astro.url.pathname;
 			updateToggleIcon(newTheme);
 		});
 		
-		function updateToggleIcon(theme) {
-			const moonIcon = themeToggle?.querySelector('.moon-icon');
-			const sunIcon = themeToggle?.querySelector('.sun-icon');
+		function updateToggleIcon(theme: 'light' | 'dark') {
+			const moonIcon = themeToggle?.querySelector<HTMLElement>('.moon-icon');
+			const sunIcon = themeToggle?.querySelector<HTMLElement>('.sun-icon');
 			
 			if (moonIcon && sunIcon) {
 				if (theme === 'dark') {
@@ -134,9 +134,9 @@ const currentPath = Astro.url.pathname;
 	// 네비게이션 플로팅 효과
 	function initNavFloat() {
 		const nav = document.querySelector('nav');
-		let lastScrollY = window.scrollY;
 
 		function updateNavFloat() {
+			if (!nav) return;
 			const currentScrollY = window.scrollY;
 			
 			if (currentScrollY > 20) {
@@ -144,8 +144,6 @@ const currentPath = Astro.url.pathname;
 			} else {
 				nav.classList.remove('floating');
 			}
-			
-			lastScrollY = currentScrollY;
 		}
 
 		window.addEventListener('scroll', updateNavFloat, { passive: true });
