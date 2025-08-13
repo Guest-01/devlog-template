@@ -14,10 +14,14 @@ npm run build        # 프로덕션 빌드 (./dist/ 폴더에 생성)
 npm run preview      # 빌드 미리보기
 ```
 
+### 코드 품질 검사
+```bash
+npm run astro check               # TypeScript 및 Astro 검사 (타입 체크 + 린팅)
+```
+
 ### Astro CLI
 ```bash
 npm run astro add <integration>    # 통합 추가
-npm run astro check               # TypeScript 및 Astro 검사
 npm run astro -- --help          # CLI 도움말
 ```
 
@@ -35,8 +39,21 @@ npm run astro -- --help          # CLI 도움말
 - `src/pages/`: 페이지 컴포넌트 (동적 콘텐츠 로딩)
 - `src/types/`: TypeScript 타입 정의
 
+### Content Collections 스키마
+**블로그 포스트** (`src/content/blog/`):
+```typescript
+{
+  title: string,           // 포스트 제목 (필수)
+  description?: string,    // 포스트 설명 (선택)
+  publishDate: Date,       // 발행 날짜 (필수)
+  updatedDate?: Date,      // 수정 날짜 (선택)
+  tags: string[],          // 태그 배열 (기본값: [])
+  draft: boolean           // 초안 여부 (기본값: false)
+}
+```
+
 ### 콘텐츠 관리 시스템
-- **블로그**: Astro Content Collections로 마크다운 파일 관리
+- **블로그**: Astro Content Collections로 마크다운 파일 관리 (Zod 스키마 검증)
 - **프로젝트**: JSON 기반 구조화된 데이터
 - **이력서**: JSON 기반 구조화된 데이터
 - **설정**: TypeScript 설정 파일로 개인화
