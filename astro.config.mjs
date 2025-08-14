@@ -17,5 +17,5 @@ export default defineConfig({
     : 'http://localhost:4321',
   
   // username.github.io 저장소는 루트에서 서빙, 일반 저장소는 서브패스에서 서빙
-  base: isGitHubPages && !isUserSite ? `/${repositoryName}` : '/',
+  base: isGitHubPages && !isUserSite ? `/${repositoryName}/` : '/',
 });
