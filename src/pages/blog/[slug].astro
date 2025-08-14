@@ -5,6 +5,8 @@ import Comments from '../../components/Comments.astro';
 import TableOfContents from '../../components/TableOfContents.astro';
 import { SITE } from '../../config/site.ts';
 
+const base = import.meta.env.BASE_URL;
+
 export async function getStaticPaths() {
 	const posts = await getCollection('blog', ({ data }) => {
 		return !data.draft;
@@ -74,7 +76,7 @@ const headings = rawHeadings
 		<Comments />
 		
 		<footer class="post-footer">
-			<a href="/" class="back-link">← 블로그 목록으로 돌아가기</a>
+			<a href={base} class="back-link">← 블로그 목록으로 돌아가기</a>
 		</footer>
 		
 		<!-- TOC 플로팅 -->
@@ -83,7 +85,7 @@ const headings = rawHeadings
 </Layout>
 
 <!-- 헤딩에 ID 추가하는 스크립트 -->
-<script define:vars={{ headings }}>
+<script is:inline define:vars={{ headings }}>
 	// 페이지 로드 후 헤딩에 ID 추가
 	function addHeadingIds() {
 		const contentHeadings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3');

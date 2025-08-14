@@ -30,7 +30,7 @@ const isCommentsEnabled = hasGiscusScript;
           
           // 잠시 후 테마 설정 (iframe이 완전히 로드된 후)
           setTimeout(() => {
-            giscusFrame.contentWindow.postMessage({
+            giscusFrame.contentWindow?.postMessage({
               giscus: {
                 setConfig: {
                   theme: currentTheme === 'dark' ? 'dark' : 'light'
