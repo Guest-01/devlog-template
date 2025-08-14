@@ -108,6 +108,7 @@ const currentPath = Astro.url.pathname;
 			html.setAttribute('data-theme', newTheme);
 			localStorage.setItem('theme', newTheme);
 			updateToggleIcon(newTheme);
+			updateGiscusTheme(newTheme);
 		});
 		
 		function updateToggleIcon(theme: 'light' | 'dark') {
@@ -124,6 +125,20 @@ const currentPath = Astro.url.pathname;
 					moonIcon.style.display = 'inline';
 					sunIcon.style.display = 'none';
 				}
+			}
+		}
+		
+		// giscus 테마 동기화 함수
+		function updateGiscusTheme(theme: 'light' | 'dark') {
+			const giscusFrame = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
+			if (giscusFrame && giscusFrame.contentWindow) {
+				giscusFrame.contentWindow.postMessage({
+					giscus: {
+						setConfig: {
+							theme: theme === 'dark' ? 'dark' : 'light'
+						}
+					}
+				}, 'https://giscus.app');
 			}
 		}
 	}

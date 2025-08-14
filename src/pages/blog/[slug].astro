@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import Comments from '../../components/Comments.astro';
 
 const authorName = "홍재훈";
 
@@ -51,6 +52,9 @@ function formatDate(date: Date): string {
 		<div class="post-content">
 			<Content />
 		</div>
+		
+		<!-- 댓글 섹션 -->
+		<Comments />
 		
 		<footer class="post-footer">
 			<a href="/" class="back-link">← 블로그 목록으로 돌아가기</a>

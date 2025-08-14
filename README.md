@@ -9,6 +9,7 @@
 - **타입 안전성**: Content Collections 및 TypeScript(strict 모드)를 통한 데이터 유효성 검사
 - **자동 날짜 정렬 및 포맷팅**: 블로그 포스트 및 프로젝트 날짜 자동 처리
 - **간결한 디자인**: 미니멀하고 타이포그래피 중심의 레이아웃
+- **댓글 시스템**: giscus 통합 지원으로 GitHub 기반 댓글 기능
 
 ## 🚀 시작하기
 
@@ -57,6 +58,15 @@ export const SITE = {
     github: 'https://github.com/your-username', // GitHub 프로필 URL
     linkedin: 'https://linkedin.com/in/your-username', // LinkedIn 프로필 URL
   },
+  
+  // giscus 댓글 시스템 설정
+  comments: {
+    // giscus.app에서 생성된 스크립트를 아래에 붙여넣으세요
+    // 빈 문자열이면 댓글이 비활성화됩니다
+    giscusScript: `
+      <!-- giscus.app에서 생성된 스크립트를 여기에 붙여넣으세요 -->
+    `.trim()
+  }
 };
 ```
 
@@ -113,7 +123,41 @@ draft: false
 }
 ```
 
-### 4. 이력서 정보 수정
+### 4. 댓글 시스템 설정 (선택 사항)
+
+블로그 포스트에 댓글 기능을 추가하려면 giscus를 설정하세요:
+
+1. [giscus.app](https://giscus.app)에 접속
+2. GitHub 저장소를 설정하고 giscus 앱을 설치
+3. 설정을 완료하면 생성되는 `<script>` 태그 전체를 복사
+4. `src/config/site.ts`의 `comments.giscusScript` 필드에 붙여넣기
+
+```typescript
+// src/config/site.ts
+comments: {
+  giscusScript: `
+    <script src="https://giscus.app/client.js"
+            data-repo="your-username/your-repo"
+            data-repo-id="your-repo-id"
+            data-category="General"
+            data-category-id="your-category-id"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="ko"
+            crossorigin="anonymous"
+            async>
+    </script>
+  `.trim()
+}
+```
+
+댓글을 비활성화하려면 `giscusScript`를 빈 문자열 `""` 로 설정하세요.
+
+### 5. 이력서 정보 수정
 
 `src/data/resume.json` 파일을 수정하여 이력서 정보를 업데이트합니다. 프로필 설명, 기술 스택, 경력, 학력 등을 포함할 수 있습니다.
 
@@ -161,6 +205,8 @@ draft: false
 
 ```
 src/
+├── components/
+│   └── Comments.astro  # 댓글 컴포넌트 (giscus 통합)
 ├── config/
 │   └── site.ts         # 사이트 전역 설정
 ├── content/
