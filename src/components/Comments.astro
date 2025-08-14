@@ -24,7 +24,7 @@ const isCommentsEnabled = hasGiscusScript;
       
       // giscus iframe이 로드될 때까지 기다린 후 테마 설정
       const checkGiscusFrame = setInterval(() => {
-        const giscusFrame = document.querySelector('iframe.giscus-frame');
+        const giscusFrame = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
         if (giscusFrame && giscusFrame.contentWindow) {
           clearInterval(checkGiscusFrame);
           

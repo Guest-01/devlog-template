@@ -46,6 +46,7 @@ const hasHeadings = headings && headings.length > 0;
         link.addEventListener('click', (e) => {
           e.preventDefault();
           const targetId = link.getAttribute('href')?.substring(1);
+          if (!targetId) return;
           const targetElement = document.getElementById(targetId);
           
           if (targetElement) {

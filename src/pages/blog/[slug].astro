@@ -3,8 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Comments from '../../components/Comments.astro';
 import TableOfContents from '../../components/TableOfContents.astro';
-
-const authorName = "홍재훈";
+import { SITE } from '../../config/site.ts';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog', ({ data }) => {
@@ -46,7 +45,7 @@ const headings = rawHeadings
 	}));
 ---
 
-<Layout title={`${post.data.title} - ${authorName}`}>
+<Layout title={`${post.data.title} - ${SITE.author.name}`}>
 	<article class="blog-post">
 		<header class="post-header">
 			<h1>{post.data.title}</h1>

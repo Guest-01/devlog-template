@@ -1,6 +1,7 @@
 export interface Project {
   id: string;
   title: string;
+  thumbnail?: string;
   description: string;
   status: '진행중' | '완료' | '중단';
   period: {
